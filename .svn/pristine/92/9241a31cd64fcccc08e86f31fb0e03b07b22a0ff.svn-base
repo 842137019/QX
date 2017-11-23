@@ -1,0 +1,280 @@
+-- Merging decision tree log ---
+manifest
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:2:1-86:12
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:2:1-86:12
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:2:1-86:12
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:2:1-86:12
+MERGED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.0-alpha1.aar\d07df49fbcbd89a787df1bd5e778fc74\AndroidManifest.xml:17:1-31:12
+MERGED from [org.simple:androideventbus:1.0.5.1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\androideventbus-1.0.5.1.aar\4512d374e670629fae55515b7f146bbb\AndroidManifest.xml:2:1-11:12
+MERGED from [org.litepal.android:core:1.3.0] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\core-1.3.0.aar\28f30f5b5526ddc6fc5b27bc7d592670\AndroidManifest.xml:2:1-16:12
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.0-alpha1.aar\94e096cefde860d7ffd0efaebaf14397\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.0-alpha1.aar\71bfb64b216587ff43391b49bd3239eb\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0-alpha1.aar\46f1c4720a5456bbd356f0276923c978\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0-alpha1.aar\b5e4680e3534038cfc2987999d78e2e9\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.0-alpha1.aar\5b1b80f55dfa718cb7a1de5344cdbbea\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.0-alpha1.aar\2bddd0bbd811130d702484e3ce0e7e00\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.0-alpha1.aar\57d78f0d854f7379c40f536a77fe3542\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.0-alpha1.aar\b874b57858d8a0ab29abfe55eec380fe\AndroidManifest.xml:17:1-31:12
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:2:1-86:12
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:2:1-86:12
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:2:1-86:12
+	package
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:4:11-36
+		INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+		INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:2:1-86:12
+		INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:2:1-86:12
+		INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:2:11-69
+	android:installLocation
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:3:11-49
+uses-permission#android.permission.INTERNET
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:6:5-67
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:6:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:7:5-81
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:7:22-78
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:8:5-83
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:8:22-81
+uses-permission#android.permission.GET_TASKS
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:9:5-67
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:9:22-65
+uses-permission#android.permission.BIND_ACCESSIBILITY_SERVICE
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:10:5-85
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:10:22-82
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:11:5-74
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:11:22-72
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:12:5-80
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:12:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:13:5-78
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:13:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:14:5-75
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:14:22-73
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:15:5-78
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:15:22-76
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:16:5-80
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:16:22-78
+uses-permission#android.permission.WAKE_LOCK
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:17:5-68
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:17:22-65
+uses-permission#android.permission.DISABLE_KEYGUARD
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:18:5-75
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:18:22-72
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:19:5-72
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:19:22-70
+application
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:22:5-85:19
+MERGED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.0-alpha1.aar\d07df49fbcbd89a787df1bd5e778fc74\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.0-alpha1.aar\d07df49fbcbd89a787df1bd5e778fc74\AndroidManifest.xml:29:5-20
+MERGED from [org.litepal.android:core:1.3.0] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\core-1.3.0.aar\28f30f5b5526ddc6fc5b27bc7d592670\AndroidManifest.xml:11:5-14:19
+MERGED from [org.litepal.android:core:1.3.0] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\core-1.3.0.aar\28f30f5b5526ddc6fc5b27bc7d592670\AndroidManifest.xml:11:5-14:19
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.0-alpha1.aar\94e096cefde860d7ffd0efaebaf14397\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.0-alpha1.aar\94e096cefde860d7ffd0efaebaf14397\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.0-alpha1.aar\71bfb64b216587ff43391b49bd3239eb\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.0-alpha1.aar\71bfb64b216587ff43391b49bd3239eb\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0-alpha1.aar\46f1c4720a5456bbd356f0276923c978\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0-alpha1.aar\46f1c4720a5456bbd356f0276923c978\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0-alpha1.aar\b5e4680e3534038cfc2987999d78e2e9\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0-alpha1.aar\b5e4680e3534038cfc2987999d78e2e9\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.0-alpha1.aar\5b1b80f55dfa718cb7a1de5344cdbbea\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.0-alpha1.aar\5b1b80f55dfa718cb7a1de5344cdbbea\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.0-alpha1.aar\2bddd0bbd811130d702484e3ce0e7e00\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.0-alpha1.aar\2bddd0bbd811130d702484e3ce0e7e00\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.0-alpha1.aar\57d78f0d854f7379c40f536a77fe3542\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.0-alpha1.aar\57d78f0d854f7379c40f536a77fe3542\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.0-alpha1.aar\b874b57858d8a0ab29abfe55eec380fe\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.0-alpha1.aar\b874b57858d8a0ab29abfe55eec380fe\AndroidManifest.xml:29:5-20
+	android:supportsRtl
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:28:9-35
+	android:label
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:26:9-41
+	android:persistent
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:27:9-34
+	android:icon
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:25:9-43
+	android:allowBackup
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:24:9-35
+	android:theme
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:29:9-40
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:23:9-38
+activity#com.cc.helperqq.MainActivity
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:31:9-39:20
+	android:launchMode
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:33:13-42
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:32:13-41
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:34:13-38:29
+action#android.intent.action.MAIN
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:35:17-68
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:35:25-66
+category#android.intent.category.LAUNCHER
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:37:17-76
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:37:27-74
+service#com.cc.helperqq.service.HelperQQService
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:41:9-52:19
+	android:label
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:44:13-45
+	android:exported
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:43:13-36
+	android:permission
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:45:13-79
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:42:13-52
+intent-filter#android.accessibilityservice.AccessibilityService
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:46:13-48:29
+action#android.accessibilityservice.AccessibilityService
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:47:17-91
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:47:25-89
+meta-data#android.accessibilityservice
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:49:13-51:67
+	android:resource
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:51:17-65
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:50:17-60
+service#com.cc.helperqq.service.TaskControllerService
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:54:9-57:38
+	android:enabled
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:56:13-35
+	android:exported
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:57:13-36
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:55:13-58
+meta-data#xposedmodule
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:60:9-62:35
+	android:value
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:62:13-33
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:61:13-40
+meta-data#xposeddescription
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:64:9-66:47
+	android:value
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:66:13-45
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:65:13-45
+meta-data#xposedminversion
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:68:9-70:33
+	android:value
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:70:13-31
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:69:13-44
+receiver#com.cc.helperqq.recver.BootRecver
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:72:9-84:20
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:73:13-46
+intent-filter#android.intent.action.BOOT_COMPLETED
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:74:13-76:29
+	android:priority
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:74:28-51
+action#android.intent.action.BOOT_COMPLETED
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:75:17-78
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:75:25-76
+intent-filter#android.intent.action.MEDIA_EJECT+android.intent.action.MEDIA_MOUNTED
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:78:13-83:29
+	android:priority
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:78:28-51
+action#android.intent.action.MEDIA_MOUNTED
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:79:17-77
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:79:25-75
+action#android.intent.action.MEDIA_EJECT
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:80:17-75
+	android:name
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:80:25-73
+data
+ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:82:17-46
+	android:scheme
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml:82:23-44
+uses-sdk
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+MERGED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.0-alpha1.aar\d07df49fbcbd89a787df1bd5e778fc74\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.0-alpha1.aar\d07df49fbcbd89a787df1bd5e778fc74\AndroidManifest.xml:21:5-23:78
+MERGED from [org.simple:androideventbus:1.0.5.1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\androideventbus-1.0.5.1.aar\4512d374e670629fae55515b7f146bbb\AndroidManifest.xml:7:5-9:40
+MERGED from [org.simple:androideventbus:1.0.5.1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\androideventbus-1.0.5.1.aar\4512d374e670629fae55515b7f146bbb\AndroidManifest.xml:7:5-9:40
+MERGED from [org.litepal.android:core:1.3.0] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\core-1.3.0.aar\28f30f5b5526ddc6fc5b27bc7d592670\AndroidManifest.xml:7:5-9:41
+MERGED from [org.litepal.android:core:1.3.0] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\core-1.3.0.aar\28f30f5b5526ddc6fc5b27bc7d592670\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.0-alpha1.aar\94e096cefde860d7ffd0efaebaf14397\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.0-alpha1.aar\94e096cefde860d7ffd0efaebaf14397\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.0-alpha1.aar\71bfb64b216587ff43391b49bd3239eb\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.0-alpha1.aar\71bfb64b216587ff43391b49bd3239eb\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0-alpha1.aar\46f1c4720a5456bbd356f0276923c978\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0-alpha1.aar\46f1c4720a5456bbd356f0276923c978\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0-alpha1.aar\b5e4680e3534038cfc2987999d78e2e9\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0-alpha1.aar\b5e4680e3534038cfc2987999d78e2e9\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.0-alpha1.aar\5b1b80f55dfa718cb7a1de5344cdbbea\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.0-alpha1.aar\5b1b80f55dfa718cb7a1de5344cdbbea\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.0-alpha1.aar\2bddd0bbd811130d702484e3ce0e7e00\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.0-alpha1.aar\2bddd0bbd811130d702484e3ce0e7e00\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.0-alpha1.aar\57d78f0d854f7379c40f536a77fe3542\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.0-alpha1.aar\57d78f0d854f7379c40f536a77fe3542\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.0-alpha1.aar\b874b57858d8a0ab29abfe55eec380fe\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.0-alpha1.aar\b874b57858d8a0ab29abfe55eec380fe\AndroidManifest.xml:21:5-23:58
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.0-alpha1.aar\d07df49fbcbd89a787df1bd5e778fc74\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+		INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+		ADDED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+		INJECTED from F:\AndroidStudioProjects\HelperQQ\app\src\main\AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.0-alpha1.aar\d07df49fbcbd89a787df1bd5e778fc74\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.0-alpha1.aar\94e096cefde860d7ffd0efaebaf14397\AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.0-alpha1.aar\94e096cefde860d7ffd0efaebaf14397\AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.0-alpha1.aar\71bfb64b216587ff43391b49bd3239eb\AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.0-alpha1.aar\71bfb64b216587ff43391b49bd3239eb\AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0-alpha1.aar\46f1c4720a5456bbd356f0276923c978\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0-alpha1.aar\46f1c4720a5456bbd356f0276923c978\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0-alpha1.aar\b5e4680e3534038cfc2987999d78e2e9\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0-alpha1.aar\b5e4680e3534038cfc2987999d78e2e9\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.0-alpha1.aar\5b1b80f55dfa718cb7a1de5344cdbbea\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.0-alpha1.aar\5b1b80f55dfa718cb7a1de5344cdbbea\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.0-alpha1.aar\2bddd0bbd811130d702484e3ce0e7e00\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.0-alpha1.aar\2bddd0bbd811130d702484e3ce0e7e00\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.0-alpha1.aar\57d78f0d854f7379c40f536a77fe3542\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.0-alpha1.aar\57d78f0d854f7379c40f536a77fe3542\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.0-alpha1.aar\b874b57858d8a0ab29abfe55eec380fe\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.0-alpha1.aar\b874b57858d8a0ab29abfe55eec380fe\AndroidManifest.xml:25:5-27:41
+	android:value
+		ADDED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.0-alpha1.aar\d07df49fbcbd89a787df1bd5e778fc74\AndroidManifest.xml:27:9-38
+	android:name
+		ADDED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\fangying\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.0-alpha1.aar\d07df49fbcbd89a787df1bd5e778fc74\AndroidManifest.xml:26:9-47

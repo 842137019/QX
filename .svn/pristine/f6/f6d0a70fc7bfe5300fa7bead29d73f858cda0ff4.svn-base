@@ -1,0 +1,53 @@
+package com.cc.helperqq;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+
+import com.cc.helperqq.utils.Constants;
+import com.cc.helperqq.utils.EventBusUtils;
+import com.cc.helperqq.utils.Utils;
+
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Utils.openScreen(this);
+        new Thread() {
+            @Override
+            public void run() {
+                Utils.startFuzhuService();
+                Utils.startTaskService(MainActivity.this);
+            }
+        }.start();
+        EventBusUtils.getInstance().register(this);
+//        Button btn_mass= (Button) findViewById(R.id.btn_mass);
+//        btn_mass.setOnClickListener(this);
+
+        finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_mass:
+                Utils.sleep(3000);
+                break;
+        }
+    }
+}

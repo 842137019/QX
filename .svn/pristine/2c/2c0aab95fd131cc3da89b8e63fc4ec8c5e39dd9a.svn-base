@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="F:\AndroidStudioProjects\HelperQQ\app\src\main\assets"><file name="litepal.xml" path="F:\AndroidStudioProjects\HelperQQ\app\src\main\assets\litepal.xml"/><file name="xposed_init" path="F:\AndroidStudioProjects\HelperQQ\app\src\main\assets\xposed_init"/></source><source path="F:\AndroidStudioProjects\HelperQQ\app\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="F:\AndroidStudioProjects\HelperQQ\app\src\release\assets"/></dataSet></merger>

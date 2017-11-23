@@ -1,0 +1,146 @@
+package com.cc.helperqq.task;
+
+import android.os.Handler;
+import android.text.TextUtils;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.TextView;
+
+import com.cc.helperqq.entity.TaskEntry;
+import com.cc.helperqq.utils.Constants;
+import com.cc.helperqq.utils.FileUtils;
+import com.cc.helperqq.utils.LogUtils;
+import com.cc.helperqq.utils.QQError;
+import com.cc.helperqq.utils.SharePreferencesUtils;
+import com.cc.helperqq.utils.ShellUtils;
+import com.cc.helperqq.utils.Utils;
+import com.cc.helperqq.http.HttpHandler;
+import com.cc.helperqq.http.HttpTask;
+import com.cc.helperqq.service.HelperQQService;
+
+import java.io.File;
+import java.util.List;
+
+/**
+ * 备份
+ * Created by fangying on 2017/9/11.
+ */
+
+public class BackupsTask {
+    private HelperQQService service;
+    private Handler handler;
+
+    public BackupsTask(HelperQQService service, Handler handler) {
+        this.handler = handler;
+        this.service = service;
+    }
+
+    public void backups(final TaskEntry entry) {
+        Utils.startPage(Constants.QQ_HOME_ACTIVITY);
+        Utils.sleep(3000L);
+        boolean isrun = true;
+        int dex = 0;
+        while (isrun) {
+            long time = System.currentTimeMillis() / 1000;
+            long oldtime = SharePreferencesUtils.getInstance(service).getTimeStamp();
+            long currentTime = SharePreferencesUtils.getInstance(service).getCurrentTime();
+            LogUtils.logError(" 等待备份: " + "time=" + time + "  oldtime=" + oldtime + "   currentTime=" + currentTime + "  time - oldtime=" + (time - oldtime));
+            if (time - oldtime >= currentTime) {
+                SharePreferencesUtils.getInstance(service).setTimeStamp(0);
+                SharePreferencesUtils.getInstance(service).setCurrentTime(0);
+                isrun = false;
+            } else {
+                dex = 1;
+                QQError.loginPromptAcitvity(service);
+                Utils.sleep(40 * 1000L);
+            }
+        }
+        if (dex == 0){
+            LogUtils.logInfo("没等待  -----------------");
+        }
+        String Name = "";
+        AccessibilityNodeInfo nodeInfo = Utils.findViewByDesc(service, "帐户及设置");
+        if (nodeInfo == null) {
+            handler.sendEmptyMessage(1);
+            return;
+        }
+        Utils.clickCompone(nodeInfo);
+        Utils.sleep(3000);
+        AccessibilityNodeInfo nickName = Utils.findViewById(service, "com.tencent.mobileqq:id/nickname");
+        if (nickName != null && !TextUtils.isEmpty(nickName.getText().toString())) {
+            Name = nickName.getText().toString();
+            LogUtils.logError("  nickname=  " + Name);
+        }
+        Utils.clickCompone(Utils.findViewById(service, "com.tencent.mobileqq:id/head_layout"));
+        Utils.sleep(3000);
+        if (Utils.isTragetActivity(Constants.QQ_USERINFO_ACTIVITY)) {
+            List<AccessibilityNodeInfo> list = Utils.findViewListByType(service, TextView.class.getName());
+            String nick = "";
+            String id = "";
+            boolean isfind = true;
+            int index = 0;
+            while (isfind) {
+                if (!TextUtils.isEmpty(list.get(index).getText())) {
+                    String nickname = list.get(index).getText().toString();
+                    if (nickname.equals(Name)) {
+                        nick = nickname;
+                        id = list.get(index + 2).getText().toString();
+                        isfind = false;
+                    }
+                }
+                index++;
+            }
+
+            LogUtils.logInfo("  nick = " + nick + " id =" + id);
+            Utils.sleep(3000);
+            if (entry.getWx_id().equals(id)) {
+                String imei = Utils.getDeviceId(service);
+                String sim = Utils.getSIM(service);
+                String sid = Utils.getSId(service);
+                HttpHandler.reportLocalInfo(entry.getWx_sign(), imei, null, sid, sim, id, null, null, null, new HttpTask.HttpCallback() {
+                    @Override
+                    public void onSuccess(String data) {
+                        LogUtils.logInfo("上傳數據完成  " + data);
+                    }
+
+                    @Override
+                    public void onFailure(String errMsg) {
+                        LogUtils.logError("请求失败！" + errMsg);
+                        HttpHandler.reportError(entry.getWx_sign(), "上傳數據失败!");
+                        handler.sendEmptyMessage(2);
+                    }
+
+                    @Override
+                    public void onFinished() {
+                        exeBackupOper(entry);
+                    }
+                });
+            } else {
+                LogUtils.logError("accunt = null ; name  : = null");
+                Utils.exitApp(Constants.APP_NAME);
+                Utils.sleep(3000L);
+                handler.sendEmptyMessage(1);
+                return;
+            }
+        }
+    }
+
+    private void exeBackupOper(final TaskEntry info) {
+        new Thread() {
+            @Override
+            public void run() {
+                Utils.exitApp(Constants.APP_NAME);
+                Utils.sleep(3000L);
+                if (Utils.validateIsModify(service, info)) {
+                    String qq_sign = info.getWx_sign();
+                    String cachePath = "/sdcard" + File.separator + Constants.CACHE_PATH_NAME + File.separator + Constants.QQ_INFO;
+                    FileUtils.createDir(cachePath);
+                    String backups_data = cachePath + File.separator + qq_sign + "_data";
+//                    String backups_imqq = cachePath + File.separator + qq_sign + "_imqq";
+                    String backups_cvqq = cachePath + File.separator + qq_sign + "_cvqq";
+                    Utils.backupsData(backups_data, null, backups_cvqq);
+                }
+                handler.sendEmptyMessage(1);
+            }
+        }.start();
+    }
+}

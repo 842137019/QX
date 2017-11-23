@@ -1,0 +1,82 @@
+package com.cc.helperqq.task;
+
+import android.graphics.Rect;
+import android.os.Handler;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.Switch;
+
+import com.cc.helperqq.service.HelperQQService;
+import com.cc.helperqq.utils.Constants;
+import com.cc.helperqq.utils.LogUtils;
+import com.cc.helperqq.utils.Utils;
+
+import java.util.List;
+
+/**
+ * 在通知栏关闭QQ通知
+ * Created by fangying on 2017/11/17.
+ */
+
+public class ClosePhoneNotificationTask {
+    private HelperQQService service;
+    private Handler handler;
+
+    public ClosePhoneNotificationTask(HelperQQService service, Handler handler) {
+        this.service = service;
+        this.handler = handler;
+    }
+
+    public void setqNotifcation() {
+        Utils.startPage(Constants.NOTIFICATION_ACTIVITY);
+        boolean isfind = true;
+        while (isfind) {
+            AccessibilityNodeInfo qq = Utils.findViewByTextMatch(service, "QQ");
+            if (qq != null) {
+                Utils.clickCompone(qq);
+                Utils.sleep(3000L);
+                isfind = false;
+            }else {
+                Utils.pressScrollDown();
+                Utils.sleep(2000L);
+            }
+        }
+
+        List<AccessibilityNodeInfo> infos = Utils.findViewListByType(service, Switch.class.getName());
+        if (infos != null && infos.size() > 0) {
+            AccessibilityNodeInfo btn = null;
+            btn = infos.get(0);
+            if (btn.isChecked()) {
+                Rect rect = new Rect();
+                btn.getBoundsInScreen(rect);
+                LogUtils.logError("x1:" + rect.left + "y1:" + rect.top + "x2:" + rect.right + "y2:" + rect.bottom);
+                int x = (rect.left + rect.right) / 2;
+                int y = (rect.top + rect.bottom) / 2;
+                Utils.tapScreenXY(x + " " + y);
+                Utils.sleep(2500L);
+            }
+//            for (int i = 0; i < listnode.size(); i++) {
+//                if (i != 1) {
+////                    LogUtils.logError(" size =" + listnode.size() + "   i=" + i + "    btn =" + listnode.get(i));
+//                    btn = listnode.get(i);
+//                    if (btn.isChecked()) {
+//                        Rect rect = new Rect();
+//                        btn.getBoundsInScreen(rect);
+//                        LogUtils.logError("x1:" + rect.left + "y1:" + rect.top + "x2:" + rect.right + "y2:" + rect.bottom);
+//                        int x = (rect.left + rect.right) / 2;
+//                        int y = (rect.top + rect.bottom) / 2;
+//                        Utils.tapScreenXY(x + " " + y);
+//                        Utils.sleep(2500L);
+//                        btn = null;
+//                    }
+//                }
+//            }
+        }
+
+        Utils.pressBack(service);
+        Utils.sleep(2000);
+        Utils.pressBack(service);
+        Utils.sleep(2000);
+        handler.sendEmptyMessage(1);
+    }
+
+}

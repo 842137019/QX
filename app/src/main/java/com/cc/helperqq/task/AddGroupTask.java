@@ -1,0 +1,579 @@
+package com.cc.helperqq.task;
+
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Rect;
+import android.os.Handler;
+import android.text.TextUtils;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.cc.helperqq.entity.GroupInfo;
+import com.cc.helperqq.entity.TaskEntry;
+import com.cc.helperqq.utils.Constants;
+import com.cc.helperqq.utils.LogUtils;
+import com.cc.helperqq.utils.Utils;
+import com.cc.helperqq.http.HttpHandler;
+import com.cc.helperqq.http.HttpTask;
+import com.cc.helperqq.service.HelperQQService;
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+/**
+ * 加群
+ * Created by fangying on 2017/9/1.
+ */
+
+public class AddGroupTask {
+    private HelperQQService service;
+    private Handler handler;
+    private SQLiteDatabase database;
+
+    public AddGroupTask(HelperQQService service, Handler handler) {
+        this.handler = handler;
+        this.service = service;
+    }
+
+    public void addGroup(final TaskEntry taskEntry) {
+        if( !Utils.isTragetActivity(Constants.QQ_HOME_ACTIVITY)){
+            Utils.startPage(Constants.QQ_HOME_ACTIVITY);
+            Utils.sleep(5000L);
+        }
+        LogUtils.logInfo("请求获取加群数据  " + taskEntry.getWx_sign());
+//        //http://qq.down50.com/weixinoutput/wxapi.php?t=getgroup&str1=a885a65c6701037cbfaa1af547230d23&str2=1
+        HttpHandler.getAddGroup(taskEntry.getWx_sign(), new HttpTask.HttpCallback() {
+            @Override
+            public void onSuccess(String data) {
+                if (!TextUtils.isEmpty(data)) {
+                    try {
+                        JSONObject obj = new JSONObject(data);
+                        String groups = obj.optString("group_account");
+                        String wordes = obj.optString("word");
+                        if (!TextUtils.isEmpty(groups)) {
+                            String[] word = Utils.splitString(wordes);
+                            String[] group = Utils.splitString(groups);
+                            addQQGroup(taskEntry, group, word);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    LogUtils.logInfo("加群数据为空!");
+                    HttpHandler.reportError(taskEntry.getWx_sign(), "加群数据为空!");
+                    handler.sendEmptyMessage(1);
+                }
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+                LogUtils.logError("请求失败!!" + errMsg);
+                HttpHandler.reportError(taskEntry.getWx_sign(), "加群数据请求失败!");
+                handler.sendEmptyMessage(1);
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    final List<String> groupList = new ArrayList<String>();
+    final Map<String, List<String>> listMap = new HashMap<String, List<String>>();
+    final List<String> groupFailList = new ArrayList<String>();
+    final List<String> payGroup = new ArrayList<String>();
+    final List<String> AlreadyAddedGroup = new ArrayList<String>();
+    final List<String> provingGroup = new ArrayList<String>();
+    final List<String> unableAdd = new ArrayList<String>();
+    final List<String> notdata = new ArrayList<>();
+
+    public void addQQGroup(TaskEntry taskEntries, String[] groups, String[] words) {
+        LogUtils.logInfo("  groups  length  = " + groups.length);
+        AccessibilityNodeInfo contacts = Utils.findViewByText(service, "联系人");
+        if (contacts == null) {
+            handler.sendEmptyMessage(1);
+            return;
+        }
+        for (int i = 0; i < groups.length; i++) {
+            String grouId = groups[i];
+            boolean isfind = true;
+            int ui = 0;
+            while (isfind) {
+                if (Utils.isTragetActivity(Constants.QQ_ADD_CONTACTS_ACTIVITY) || Utils.isTragetActivity(Constants.QQ_SEARCH_CONTACTS_ACTIVITY)) {
+                    isfind = false;
+                } else {
+                    if ((Utils.findViewByDesc(service, "帐户及设置")) != null) {
+                        contacts = Utils.findViewByText(service, "联系人");
+                        if (contacts == null) {
+                            isfind = false;
+                            handler.sendEmptyMessage(1);
+                            return;
+                        }
+                        Utils.clickCompone(contacts);
+                        Utils.sleep(3000);
+
+                        Utils.clickCompone(Utils.findViewById(service, "com.tencent.mobileqq:id/ivTitleBtnRightText"));
+                        Utils.sleep(2000);
+                    }
+                }
+                ui++;
+                if (ui == 6) {
+                    isfind = false;
+                    Utils.launcherApp(service, Constants.APP_NAME);
+                    handler.sendEmptyMessage(1);
+                }
+            }
+
+            List<GroupInfo> groupInfos = DataSupport.where("wxsign= ? and groupId = ? ", taskEntries.getWx_sign(), grouId).find(GroupInfo.class);
+//            LogUtils.logInfo(" 第 " + (i + 1) + " 次 " + "     " + grouId + "         " + operator.isfind(database, DBConfig.TB_QQGROUP, DBConfig.C_QQGROUP_ID, grouId));
+            if (groupInfos.size() != 0) {
+                groupList.add(grouId);
+            } else {
+                inputText(grouId);
+                Utils.sleep(4000);
+                AccessibilityNodeInfo people = null;
+                if ((people = Utils.findViewByText(service, "找群")) != null) {
+                    Utils.clickCompone(people);
+                    Utils.sleep(7000);
+                } else if ((people = Utils.findViewByText(service, "搜索")) != null) {
+                    Utils.clickCompone(people);
+                    Utils.sleep(7000);
+                } else {
+                    groupFailList.add(grouId);
+                    continue;
+                }
+
+                AccessibilityNodeInfo sousuo = Utils.findViewByText(service, "正在搜索…");
+                if (sousuo != null) {
+                    groupFailList.add(grouId);
+                    Utils.pressBack(service);
+                    Utils.sleep(2000);
+                    continue;
+                }
+
+                AccessibilityNodeInfo nono = Utils.findViewByText(service, "没有找到相关结果");
+                if (nono == null) {
+                    Utils.sleep(3000);
+                    AccessibilityNodeInfo apply = Utils.findViewByText(service, Button.class.getName(), "申请加群");
+                    if (apply != null) {
+                        LogUtils.logInfo("   申请加群   ");
+                        List<AccessibilityNodeInfo> list = Utils.findViewListByType(service, TextView.class.getName());
+                        if (list.size() > 1) {
+                            String nickName = "";
+                            String groupId = "";
+                            int index = 0;
+                            isfind = true;
+                            while (isfind) {
+                                if (!TextUtils.isEmpty(list.get(index).getText())) {
+                                    if (list.get(index).getText().toString().equals(grouId)) {
+                                        nickName = list.get(index - 1).getText().toString();
+                                        groupId = list.get(index).getText().toString();
+                                        isfind = false;
+                                    } else {
+                                        index++;
+                                    }
+                                    if (index == list.size()) {
+                                        isfind = false;
+                                    }
+                                }
+                            }
+                            String strname = Utils.getBASE64(nickName);
+                            Utils.clickCompone(apply);
+                            Utils.sleep(6 * 1000L);
+                            AccessibilityNodeInfo applyAddGroup = Utils.findViewByText(service, Button.class.getName(), "申请加群");
+                            if (applyAddGroup == null) {
+                                verificationInfo(taskEntries.getWx_sign(),grouId, strname, words[i]);
+                            } else {
+                                unableAdd.add(grouId);
+                                GroupInfo groupInfo = new GroupInfo();
+                                groupInfo.setGroupId(groupId);
+                                groupInfo.setGroupName(strname);
+                                groupInfo.setGroupType("success");
+                                groupInfo.setWxsign(taskEntries.getWx_sign());
+                                groupInfo.saveThrows();
+                            }
+
+                            List<GroupInfo> infos = DataSupport.findAll(GroupInfo.class);
+                            for (int m = 0; m < infos.size(); m++) {
+                                LogUtils.logInfo("name = " + infos.get(m).getGroupName() + " id =" + infos.get(m).getGroupId());
+                            }
+                        }
+                    } else if ((apply = Utils.findViewByText(service, Button.class.getName(), "发消息")) != null) {
+                        LogUtils.logInfo("  已添加  ");
+                        List<AccessibilityNodeInfo> list = Utils.findViewListByType(service, TextView.class.getName());
+                        if (list.size() > 1) {
+                            String nickName = "";
+                            String groupId = "";
+                            int index = 0;
+                            isfind = true;
+                            while (isfind) {
+                                if (!TextUtils.isEmpty(list.get(index).getText())) {
+                                    if (list.get(index).getText().toString().equals(grouId)) {
+                                        nickName = list.get(index - 1).getText().toString();
+                                        groupId = list.get(index).getText().toString();
+                                        isfind = false;
+                                    }
+                                    index++;
+                                    if (index == list.size()) {
+                                        isfind = false;
+                                    }
+                                }
+                            }
+                            String strname = Utils.getBASE64(nickName);
+                            GroupInfo groupInfo = new GroupInfo();
+                            groupInfo.setGroupName(strname);
+                            groupInfo.setGroupId(groupId);
+                            groupInfo.setGroupType("success");
+                            groupInfo.setWxsign(taskEntries.getWx_sign());
+                            groupInfo.saveThrows();
+                            AlreadyAddedGroup.add(groupId);
+                        }
+                        Utils.pressBack(service);
+                        Utils.sleep(2000);
+                    } else {
+                        LogUtils.logInfo("   需支付  ");
+                        AccessibilityNodeInfo btn = Utils.findViewByType(service, Button.class.getName());
+                        if (btn != null) {
+                            if (!TextUtils.isEmpty(btn.getText())) {
+                                String btnStr = btn.getText().toString();
+                                if (btnStr.contains("支付")) {
+                                    String nickName = "";
+                                    String groupId = "";
+                                    List<AccessibilityNodeInfo> list = Utils.findViewListByType(service, TextView.class.getName());
+                                    if (list.size() > 1) {
+                                        int index = 0;
+                                        isfind = true;
+                                        while (isfind) {
+                                            if (!TextUtils.isEmpty(list.get(index).getText())) {
+                                                if (list.get(index).getText().toString().equals(grouId)) {
+                                                    nickName = list.get(index - 1).getText().toString();
+                                                    groupId = list.get(index).getText().toString();
+                                                    isfind = false;
+                                                }
+                                                index++;
+                                                if (index == list.size()) {
+                                                    isfind = false;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    LogUtils.logInfo("nickName = " + nickName + "groupId = " + groupId);
+                                    Utils.clickCompone(apply);
+                                    String strname = Utils.getBASE64(nickName);
+                                    payGroup.add(grouId);
+                                    GroupInfo groupInfo = new GroupInfo();
+                                    groupInfo.setGroupId(groupId);
+                                    groupInfo.setGroupName(strname);
+                                    groupInfo.setWxsign(taskEntries.getWx_sign());
+                                    groupInfo.setGroupType("pay");
+                                    groupInfo.saveThrows();
+                                }
+                            }
+                        }
+                        Utils.clickCompone(Utils.findViewByDesc(service, "返回按钮"));
+                        Utils.sleep(2000);
+                    }
+                } else {
+                    notdata.add(grouId);
+                    continue;
+                }
+            }
+        }
+
+        LogUtils.logInfo(" success size  = " + groupList.size());
+        LogUtils.logInfo(" fail size  = " + groupFailList.size());
+        LogUtils.logInfo(" pay size  = " + payGroup.size());
+        LogUtils.logInfo(" proving size  = " + provingGroup.size());
+        LogUtils.logInfo(" added size  = " + AlreadyAddedGroup.size());
+        LogUtils.logInfo(" notdata size  = " + notdata.size());
+
+        listMap.put("fail", groupFailList);
+        listMap.put("success", groupList);
+        listMap.put("pay", payGroup);
+        listMap.put("added", AlreadyAddedGroup);
+        listMap.put("proving", provingGroup);
+        listMap.put("unable", unableAdd);
+        listMap.put("notdata", notdata);
+
+        com.alibaba.fastjson.JSONObject jsonObject = com.alibaba.fastjson.JSONObject.parseObject(JSON.toJSONString(listMap));
+        LogUtils.logError(" json string = " + jsonObject.toString());
+        HttpHandler.up_deal_group(taskEntries.getWx_sign(), jsonObject, new HttpTask.HttpCallback() {
+            @Override
+            public void onSuccess(String data) {
+                LogUtils.logInfo("  Success   data  =" + data);
+                groupFailList.clear();
+                groupList.clear();
+                payGroup.clear();
+                AlreadyAddedGroup.clear();
+                provingGroup.clear();
+                unableAdd.clear();
+                listMap.clear();
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+                groupFailList.clear();
+                groupList.clear();
+                payGroup.clear();
+                AlreadyAddedGroup.clear();
+                provingGroup.clear();
+                unableAdd.clear();
+                listMap.clear();
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+        Utils.sleep(2000);
+        AccessibilityNodeInfo back = Utils.findViewByDesc(service, "返回按钮");
+        if (back != null) {
+            Utils.clickCompone(back);
+            Utils.sleep(2000);
+        }
+
+        if (Utils.obatinMsgDialogText(service, "群资料卡")) {
+            if ((back = Utils.findViewByDesc(service, "返回消息")) != null) {
+                Utils.clickCompone(back);
+                Utils.sleep(2000L);
+            }
+        }
+
+        Utils.clickCompone(Utils.findViewByText(service, "取消"));
+        Utils.sleep(4000);
+
+        AccessibilityNodeInfo info = Utils.findViewById(service, "com.tencent.mobileqq:id/ivTitleName");
+        if (info != null && !TextUtils.isEmpty(info.getText())) {
+            if (info.getText().toString().equals("添加")) {
+                Utils.clickCompone(Utils.findViewByText(service, "联系人"));
+                Utils.sleep(2000);
+            }
+        }
+
+        handler.sendEmptyMessage(1);
+    }
+
+    private boolean isfindGroupID(String grouId, List<GroupInfo> groupInfos) {
+        for (GroupInfo groupInfo : groupInfos) {
+            if (groupInfo.getGroupId().equals(grouId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void inputText(String str) {
+        LogUtils.logInfo("输入内容：" + str);
+        AccessibilityNodeInfo et_text = Utils.findViewByType(service, EditText.class.getName());
+        if (et_text == null) {
+            AccessibilityNodeInfo contacts = Utils.findViewByText(service, "联系人");
+            if (contacts != null) {
+                Utils.clickCompone(contacts);
+                Utils.sleep(2000);
+                Utils.clickCompone(Utils.findViewById(service, "com.tencent.mobileqq:id/ivTitleBtnRightText"));
+                Utils.sleep(2000);
+            }
+        }
+        if (!TextUtils.isEmpty(str)) {
+            LogUtils.logInfo("传入的账号不为空");
+            Utils.clickCompone(et_text);
+            Utils.sleep(2000);
+            AccessibilityNodeInfo empty = Utils.findViewByDesc(service, "清空");
+            if (empty != null) {
+                Utils.clickCompone(empty);
+                Utils.sleep(2000);
+            }
+            LogUtils.logInfo("输入框输入信息 =" + str);
+            Utils.inputText(str);
+            Utils.sleep(2000);
+        }
+    }
+
+    private void verificationInfo(String wxsign,String groupId, String nickName, String word) {
+        LogUtils.logInfo("判断是否发送验证消息");
+        AccessibilityNodeInfo info = Utils.findViewByText(service, "验证信息");
+        if (info != null) {
+            AccessibilityNodeInfo ed = Utils.findViewByText(service, EditText.class.getName(), "");
+            if (ed != null) {
+//                Utils.clickCompone(Utils.findViewById(service, "com.tencent.mobileqq:id/ivTitleBtnLeft"));
+                Utils.clickCompone(Utils.findViewByText(service, "群资料"));
+                Utils.sleep(2000L);
+                Utils.pressBack(service);
+                Utils.sleep(2000);
+                provingGroup.add(groupId);
+
+            } else {
+                inputWord(word);
+                Utils.clickCompone(Utils.findViewByText(service, "发送"));
+                Utils.sleep(8000);
+
+                AccessibilityNodeInfo ok = Utils.findViewByText(service, "发送成功");
+                if (ok != null) {
+                    Utils.clickCompone(Utils.findViewByText(service, "关闭"));
+                    Utils.sleep(2000);
+                }
+                provingGroup.add(groupId);
+            }
+            GroupInfo groupInfo = new GroupInfo();
+            groupInfo.setGroupId(groupId);
+            groupInfo.setGroupName(nickName);
+            groupInfo.setGroupType("proving");
+            groupInfo.setWxsign(wxsign);
+            groupInfo.saveThrows();
+        } else {
+            Utils.sleep(10 * 1000L);
+            AccessibilityNodeInfo groupNotice = Utils.findViewByTextMatch(service, "群公告");
+            if (groupNotice != null) {
+                Utils.clickCompone(Utils.findViewByTextMatch(service, "我知道了"));
+                Utils.sleep(3000);
+            }
+
+            AccessibilityNodeInfo groupChat = Utils.findViewByDesc(service, "群资料卡");
+            if (groupChat != null) {
+                Utils.clickCompone(groupChat);
+                Utils.sleep(2000);
+
+                AccessibilityNodeInfo pc = null;
+                pc = Utils.findViewByText(service, "电脑端的消息提醒方式将与手机端保持同步。");
+                if (pc != null) {
+                    Utils.clickCompone(Utils.findViewByText(service, "我知道了"));
+                    Utils.sleep(3000L);
+                }
+
+                List<AccessibilityNodeInfo> comBtns = Utils.findViewListByType(service, CompoundButton.class.getName());
+                if (comBtns.size() > 0) {
+                    AccessibilityNodeInfo comBtn = comBtns.get(0);
+                    if (!comBtn.isChecked()) {
+                        Rect rect = new Rect();
+                        comBtn.getBoundsInScreen(rect);
+                        LogUtils.logError("x1:" + rect.left + "y1:" + rect.top + "x2:" + rect.right + "y2:" + rect.bottom);
+                        int x = (rect.left + rect.right) / 2;
+                        int y = (rect.top + rect.bottom) / 2;
+                        Utils.tapScreenXY(x + " " + y);
+                        Utils.sleep(4000L);
+                    }
+                    Utils.sleep(2000L);
+                    pc = Utils.findViewByText(service, "电脑端的消息提醒方式将与手机端保持同步。");
+                    if (pc != null) {
+                        Utils.clickCompone(Utils.findViewByText(service, "我知道了"));
+                        Utils.sleep(3000L);
+                    }
+                    AccessibilityNodeInfo textBtn = null;
+                    if ((textBtn = Utils.findViewByTextMatch(service, "群消息提示设置")) != null) {
+                        Utils.clickCompone(textBtn);
+                        Utils.sleep(2000L);
+
+                        if (Utils.findViewById(service, "com.tencent.mobileqq:id/action_sheet_actionView") != null) {
+                            Utils.sleep(2000);
+                            if ((textBtn = Utils.findViewByText(service, "屏蔽群消息")) != null) {
+                                Utils.clickCompone(textBtn);
+                                Utils.sleep(3000L);
+                            }
+                        }
+                    }
+                }
+            }
+            AccessibilityNodeInfo pc = Utils.findViewByText(service, "电脑端的消息提醒方式将与手机端保持同步。");
+            if (pc != null) {
+                Utils.clickCompone(Utils.findViewByText(service, "我知道了"));
+                Utils.sleep(3000L);
+            }
+            AccessibilityNodeInfo backBtn = Utils.findViewByDesc(service, "返回按钮");
+            if (backBtn != null) {
+                Utils.clickCompone(backBtn);
+                Utils.sleep(3000L);
+
+                AccessibilityNodeInfo group = Utils.findViewByDesc(service, "群资料卡");
+                if (group != null) {
+                    if (Utils.findViewByDesc(service, "返回消息") != null) {
+                        Utils.clickCompone(Utils.findViewByDesc(service, "返回消息"));
+                    } else {
+                        Utils.pressBack(service);
+                    }
+                    Utils.sleep(3000);
+                }
+            }
+
+            groupList.add(groupId);
+            GroupInfo groupInfo = new GroupInfo();
+            groupInfo.setGroupId(groupId);
+            groupInfo.setGroupName(nickName);
+            groupInfo.setGroupType("success");
+            groupInfo.setWxsign(wxsign);
+            groupInfo.saveThrows();
+        }
+    }
+
+    private void inputWord(String word) {
+        AccessibilityNodeInfo editinfo = Utils.findViewByType(service, EditText.class.getName());
+        if (editinfo != null) {
+            Utils.componeFocus(editinfo);
+            Utils.sleep(1000);
+            Utils.selectAllText(editinfo);
+            Utils.sleep(1000);
+            Utils.inputText(service, editinfo, word);
+            Utils.sleep(2000);
+        }
+    }
+
+
+    private void groupNum() {
+        AccessibilityNodeInfo qun = Utils.findViewByTextMatch(service, "群");
+        if (qun != null) {
+            Utils.clickCompone(qun);
+            Utils.sleep(2000);
+            AccessibilityNodeInfo createGroup = Utils.findViewByTextMatch(service, "创建群");
+            if (createGroup != null) {
+                boolean isfind = true;
+                String nickGroup = "";
+                AccessibilityNodeInfo adsListView = Utils.findViewById(service, "com.tencent.mobileqq:id/qb_troop_list_view");//android.widget.AbsListView
+                if (adsListView != null) {
+                    while (isfind) {
+                        List<AccessibilityNodeInfo> listText1 = Utils.findViewListById(service, "com.tencent.mobileqq:id/text1");
+                        if (listText1.size() > 0) {
+                            if (!TextUtils.isEmpty(listText1.get(listText1.size() - 1).getText())) {
+                                if (nickGroup.equals(listText1.get(listText1.size() - 1).getText().toString())) {
+                                    isfind = false;
+                                } else {
+                                    for (int i = 0; i < listText1.size(); i++) {
+                                        LogUtils.logInfo(" listText1 size = " + listText1.size() + "   i = " + i + "    " + listText1.get(i).getText().toString());
+
+//                                        if (!TextUtils.isEmpty(listText1.get(i).getText())) {
+//
+//                                        }
+                                    }
+                                }
+                                nickGroup = listText1.get(listText1.size() - 1).getText().toString();
+                                LogUtils.logInfo("   nickGroup = " + nickGroup);
+                            }
+                            LogUtils.logInfo("  上滑   ");
+                            Utils.swipeUp("315 1011 311 519");
+                            Utils.sleep(2000L);
+                        } else {
+                            isfind = false;
+                        }
+                    }
+                } else {
+                    isfind = false;
+                }
+            }
+        }
+    }
+
+
+}

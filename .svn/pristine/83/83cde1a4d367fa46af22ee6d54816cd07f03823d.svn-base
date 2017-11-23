@@ -1,0 +1,251 @@
+package com.cc.helperqq.service;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+
+import com.cc.helperqq.entity.TaskEntry;
+import com.cc.helperqq.MyApplication;
+import com.cc.helperqq.utils.Constants;
+import com.cc.helperqq.utils.EventBusUtils;
+import com.cc.helperqq.utils.FileUtils;
+import com.cc.helperqq.utils.LogUtils;
+import com.cc.helperqq.utils.TimeManager;
+import com.cc.helperqq.utils.Utils;
+import com.cc.helperqq.http.HttpHandler;
+import com.cc.helperqq.http.HttpTask;
+import com.cc.helperqq.recver.TimerSchemer;
+
+import org.json.JSONObject;
+import org.simple.eventbus.Subscriber;
+
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Created by Administrator on 2017/8/22.
+ */
+
+public class TaskControllerService extends Service {
+
+    private Handler handler = new Handler();
+    private TaskEntry taskEntry;
+    private List<String> tasks;
+
+    private int index = 0;
+    private TimeManager timer;
+
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        LogUtils.logInfo("任务控制服务创建");
+        Utils.saveObject(0, Constants.TASK_EXECUTE_TIME);
+        EventBusUtils.getInstance().register(this);
+        if (MyApplication.debugMode) {
+            startTask();
+            registerTimer();
+        } else {
+            requestTask();
+        }
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return Service.START_STICKY;
+    }
+
+    private void startTask() {
+        LogUtils.logInfo("请求获取任务");
+        long TASK_STEP_TIME = 60 * 1000L;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                requestTask();
+            }
+        }, TASK_STEP_TIME);
+    }
+
+    private void requestTask() {
+        String typephone = Utils.getSystemModel();
+        String tel_sign = "";
+        switch (typephone) {
+            case Constants.HONOR_PHONE_MODEL:
+                tel_sign = FileUtils.readStringToFile(Constants.MAC_ID_FILE);
+                break;
+            case Constants.RAMOS_PHONE_MODEL:
+                tel_sign = FileUtils.readStringToFile(Constants.MAC_ID_FILE_R);
+                break;
+        }
+        LogUtils.logInfo("tel_sign = " + tel_sign);
+        if (!TextUtils.isEmpty(tel_sign)) {
+            HttpHandler.requestTask(tel_sign, new HttpTask.HttpCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    if (!TextUtils.isEmpty(result)) {
+//                        LogUtils.logInfo("任务请求：" + result);
+                        taskEntry = Utils.getGson().fromJson(result, TaskEntry.class);
+                    }
+                }
+
+                @Override
+                public void onFailure(String errMsg) {
+                    LogUtils.logInfo("任务请求失败 ：" + errMsg);
+//                    handler.sendEmptyMessage(2);
+                }
+
+                @Override
+                public void onFinished() {
+                    if (taskEntry != null && taskEntry.getTel_task_status() == 1 && !TextUtils.isEmpty(taskEntry.getTask_id())) {
+                        LogUtils.logInfo(taskEntry.toString());
+                        Utils.saveObject(taskEntry, TaskEntry.class.getSimpleName());
+                        String[] taskArray = taskEntry.getDo_task().split(",");
+                        tasks = Arrays.asList(taskArray);
+                        taskRun(false);
+                    } else {
+                        startNextTask();
+                    }
+                }
+            });
+        } else {
+            // tel_sign 为空
+            LogUtils.logError("tel_sign等于空!");
+            startNextTask();
+        }
+    }
+
+    @Subscriber( tag = "taskRun" )
+    public void taskRun(boolean isStop) {
+        LogUtils.logInfo("  分发任务   taskRun  ");
+        Utils.saveObject(0, Constants.TASK_EXECUTE_TIME);
+        Utils.removeObject(Constants.KEY_CHECK_SEND);
+        if (tasks != null && !tasks.isEmpty() && index < tasks.size() && !isStop) {
+            String type = tasks.get(index);
+            LogUtils.logInfo("  taskRun  type  " + type);
+            index += 1;
+            LogUtils.logInfo(" 发送执行任务编号 " + type);
+            EventBusUtils.getInstance().sendMessage("executeTask", type);
+        } else {
+            if (taskEntry != null && !TextUtils.isEmpty(taskEntry.getTask_id())) {
+                reportRresult(taskEntry.getTask_id());
+            } else {
+                Utils.removeObject(TaskEntry.class.getSimpleName());
+                redirectNextTask();
+            }
+        }
+    }
+
+//    public void taskRun(MessageEvent.RunMsg msg) {
+//        Utils.saveObject(taskEntry, TaskEntry.class.getSimpleName());
+////        Utils.saveObject(0, Constants.TASK_EXECUTE_TIME);//创建执行任务时间
+//        Utils.sleep(2000);
+//        LogUtils.logInfo("!msg.isRun=" + !msg.isRun);
+//        if (tasks != null && !tasks.isEmpty() && index < tasks.size() && !msg.isRun) {
+//            String type = tasks.get(index);
+//            LogUtils.logInfo(" task type=" + type);
+//            EventBus.getDefault().post(new MessageEvent.TaskMsg(type));
+//            index += 1;
+//        } else {
+//            Utils.sleep(2000);
+//            LogUtils.logInfo(" taskEntry =" + taskEntry.toString() + "   ,  " + taskEntry.getTask_id());
+//            if (taskEntry != null && !TextUtils.isEmpty(taskEntry.getTask_id())) {
+//                //isRun = true  时进入 ->执行下一个任务
+//                reportRresult(taskEntry.getTask_id());
+//            } else {
+//                //没有任务了，清理数据，开始计时
+//                redirectTask();
+//            }
+//        }
+//    }
+
+    /**
+     * 上报任务完成
+     *
+     * @param task_id
+     */
+    private void reportRresult(String task_id) {
+        //任务上报完成  开始计时后 重新计时
+        HttpHandler.requestEndTask(task_id, new HttpTask.HttpCallback() {
+            @Override
+            public void onSuccess(String result) {
+                if (TextUtils.isEmpty(result)) {
+                    return;
+                }
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    int code = obj.optInt("code");
+                    if (code == 200) {
+                        LogUtils.logInfo("任务流程全部执行成功.");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                taskEntry.setDo_task("");
+                Utils.saveObject(taskEntry, TaskEntry.class.getSimpleName());
+                redirectNextTask();
+            }
+        });
+    }
+
+
+    //进入间隔时间
+    private void startNextTask() {
+        index = 0;
+        tasks = null;
+        taskEntry = null;
+        Utils.saveObject(0, Constants.TASK_EXECUTE_TIME);
+        startTask();
+    }
+
+    /**
+     * 切换到下一批任务
+     */
+    private void redirectNextTask() {
+        index = 0;
+        tasks = null;
+        taskEntry = null;
+//        Utils.saveObject(0, Constants.TASK_EXECUTE_TIME);
+        Utils.removeObject(TaskEntry.class.getSimpleName());
+        requestTask();
+    }
+
+    private void registerTimer() {
+        timer = new TimeManager();
+        TimerSchemer recver = new TimerSchemer(this);
+        timer.schedule(recver, 0, 60 * 1000L);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unRegister();
+        EventBusUtils.getInstance().unRegister(this);
+        LogUtils.logInfo("任务控制服务停止");
+    }
+
+    public void unRegister() {
+        if (timer != null) {
+            timer.cnacelAll();
+        }
+    }
+}
+
+

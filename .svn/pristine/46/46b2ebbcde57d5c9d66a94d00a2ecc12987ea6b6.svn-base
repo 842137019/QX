@@ -1,0 +1,66 @@
+package com.cc.helperqq;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+
+import com.cc.helperqq.entity.TaskEntry;
+import com.cc.helperqq.utils.Constants;
+import com.cc.helperqq.utils.EventBusUtils;
+import com.cc.helperqq.utils.LogUtils;
+import com.cc.helperqq.utils.Utils;
+
+
+public class MainActivity extends AppCompatActivity{
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        EventBusUtils.getInstance().register(this);
+        Utils.openScreen(this);
+        EventBusUtils.getInstance().register(this);
+        new Thread() {
+            @Override
+            public void run() {
+                Utils.startFuzhuService();
+                Utils.startTaskService(MainActivity.this);
+                if (!MyApplication.debugMode) {
+                    MainActivity.this.finish();
+                }
+            }
+        }.start();
+
+        findViewById(R.id.btn_debgu).setOnClickListener(v -> {
+            TaskEntry taskEntry = new TaskEntry();
+            taskEntry.setSid("460029503680369");
+            taskEntry.setImei("868191271197426");
+            taskEntry.setWx_sign("7473ff8abc5792aed45db33edfe32d85");
+            taskEntry.setTel_task_status(1);
+            taskEntry.setTask_id("7836");
+           // taskEntry.setDo_task("34,36");
+            LogUtils.logInfo("创建TaskEntry");
+            Utils.saveObject(taskEntry, TaskEntry.class.getSimpleName());
+
+                Utils.startPage(Constants.QQ_HOME_ACTIVITY);
+                Utils.sleep(5000L);
+
+            EventBusUtils.getInstance().sendMessage("executeTask", "34");
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+
+}

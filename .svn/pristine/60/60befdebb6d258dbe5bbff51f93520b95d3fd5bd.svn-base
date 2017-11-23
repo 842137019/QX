@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+android {
+//    signingConfigs {
+//        config {
+//            keyAlias 'helperqq'
+//            keyPassword '123456'
+//            storeFile file('E:/Android/helperqq_keystore.jks')
+//            storePassword '123456'
+//        }
+//    }
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        applicationId "com.cc.helperqq"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 2
+        versionName '1.3.6'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.config
+        }
+    }
+//    task clean(type: Delete) {
+//        delete rootProject.buildDir
+//    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile files('libs/httpclient-4.5.3.jar')
+    compile 'org.simple:androideventbus:1.0.5.1'
+    compile 'com.alibaba:fastjson:1.2.39'
+    compile 'org.litepal.android:core:1.3.0'
+    implementation files('libs/BASE64Encoder.jar')
+}
